@@ -12,6 +12,15 @@ class Transaction extends Model {
     use HasFactory, FilterQueryString;
 
     /**
+     * The attributes that are not assignable.
+     *
+     * @var array<int, string>
+     */
+    protected $guarded = ['id'];
+
+    protected $filters = ['id', 'wallet_id', 'type', 'related_wallet_id'];
+
+    /**
      * Get the wallet associated with the transaction.
      */
     public function wallet(): BelongsTo {

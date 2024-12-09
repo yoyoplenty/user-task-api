@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Services\Api\UserService;
+use App\Http\Services\UserService;
 use Exception;
 
 class UserController extends BaseController {

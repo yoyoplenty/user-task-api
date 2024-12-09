@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Services\Api;
+namespace App\Http\Services;
 
 use App\Repositories\TransactionRepository;
 use App\Repositories\UserRepository;
@@ -22,9 +22,12 @@ class WalletService {
         $username  = $payload['username'];
         $amount  = $payload['amount'];
 
-        $senderWallet = Auth::user()->wallet;
+        $sender = Auth::user();
+        $senderWallet = $sender->wallet;
 
         $receiver = $this->user->findWhere(['username' => $username])->first();
+        if ($sender->username === $username) throw new BadRequestHttpException("You cannot transfer to yourself");
+
         $receiverWallet = $receiver->wallet;
 
         if ($senderWallet->balance < $amount)
@@ -34,7 +37,7 @@ class WalletService {
             $senderWallet->decrement('balance', $amount);
             $receiverWallet->increment('balance', $amount);
 
-            $reference = uniqid('txn_', true);
+            $reference = 'txn_' . bin2hex(random_bytes(8));
 
             $this->logTransaction($senderWallet->id, 'debit', $amount, $receiverWallet->id, $reference);
             $this->logTransaction($receiverWallet->id, 'credit', $amount, $senderWallet->id, $reference);

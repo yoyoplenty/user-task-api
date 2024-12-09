@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Services\Api;
+namespace App\Http\Services;
 
 use App\Repositories\TransactionRepository;
 use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;

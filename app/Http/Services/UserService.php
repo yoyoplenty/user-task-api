@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Services\Api;
+namespace App\Http\Services;
 
 use App\Repositories\UserRepository;
 use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
@@ -19,7 +19,7 @@ class UserService {
     }
 
     public function findById(int $id) {
-        $user = $this->user->with(['wallet'])->findById($id);
+        $user = $this->user->with(['wallet'])->find($id);
 
         return $user;
     }

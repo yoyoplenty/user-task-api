@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\Auth\LoginRequest;
 use App\Http\Requests\Store\StoreUserRequest;
-use App\Http\Services\Api\AuthService;
+use App\Http\Services\AuthService;
 use Exception;
 
 class AuthController extends BaseController {

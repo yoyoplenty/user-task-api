@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Services\Api;
+namespace App\Http\Services;
 
 use App\Repositories\UserRepository;
 use App\Repositories\WalletRepository;
@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Stevebauman\Location\Facades\Location;
 use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
+use Tymon\JWTAuth\Facades\JWTAuth;
 
 class AuthService {
 
@@ -18,8 +19,7 @@ class AuthService {
     }
 
     public function register(array $payload) {
-        $ip = request()->ip();
-        $location = Location::get($ip);
+        $location = Location::get();
 
         if (!$location || $location->countryCode !== 'NG')
             throw new BadRequestHttpException("Registration is restricted to only nigerians");
@@ -43,9 +43,9 @@ class AuthService {
         if (!Hash::check($password, $user->password))
             throw new BadRequestHttpException("Password is incorrect.");
 
-        $token = Auth::fromUser($user);
+        $token = JWTAuth::fromUser($user);
 
-        return [...$user->toArray(), $token];
+        return [...$user->toArray(), 'token' => $token];
     }
 
     public function logout() {

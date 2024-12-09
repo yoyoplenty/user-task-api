@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\Shared\TransferFundRequest;
-use App\Http\Services\Api\WalletService;
+use App\Http\Services\WalletService;
 use Exception;
 
 class WalletController extends BaseController {

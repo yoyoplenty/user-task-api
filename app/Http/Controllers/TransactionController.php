@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\Update\UpdateTransactionRequest;
-use App\Http\Services\Api\TransactionService;
+use App\Http\Services\TransactionService;
 use Exception;
 
 class TransactionController extends BaseController {
